@@ -66,8 +66,40 @@ const deleteTodo = async (req: Request, res: Response) => {
   }
 };
 
+
+const updateTodo = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const todoIndex = data.findIndex((todo) => todo.id === +id);
+    
+    if (todoIndex === -1) {
+      return res.status(404).send({
+        status: false,
+        success: false,
+        message: "Todo not found"
+      });
+    }
+
+    data[todoIndex] = { ...data[todoIndex], ...req.body };
+    
+    res.status(200).send({
+      status: true,
+      success: true,
+      message: "Todo updated successfully",
+      data: data[todoIndex]
+    });
+  } catch (error) {
+    console.error(`error in updateTodo ${error}`);
+    res.status(500).send({
+      success: false,
+      message: `error in updateTodo ${error}`
+    });
+  }
+};
+
 export default {
   getAllTodo,
   addTodo,
   deleteTodo,
+  updateTodo,
 };
