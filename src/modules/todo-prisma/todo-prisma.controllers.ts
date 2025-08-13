@@ -9,6 +9,8 @@ const getTodos = async (req: Request, res: Response) => {
       data: data,
     });
   } catch (e) {
+    console.log(e);
+
     response.status(500).send({
       success: false,
       message: `error in getTodos: ${e}`,
