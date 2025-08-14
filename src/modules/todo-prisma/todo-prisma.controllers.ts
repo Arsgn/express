@@ -42,9 +42,10 @@ const getTodoById = async (req: Request, res: Response) => {
 
 const createTodo = async (req: Request, res: Response) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, userId } = req.body;
     const data = await prisma.todo.create({
       data: {
+        userId: userId,
         title: title,
         description: description,
       },
